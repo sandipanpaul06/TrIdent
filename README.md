@@ -35,9 +35,9 @@
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/sandipanpaul06/SISSSCO/issues">Report Bug</a>
+    <a href="https://github.com/sandipanpaul06/TrIdent/issues">Report Bug</a>
     ·
-    <a href="https://github.com/sandipanpaul06/SISSSCO/issues">Request Feature</a>
+    <a href="https://github.com/sandipanpaul06/TrIdent/issues">Request Feature</a>
   </p>
 </div>
 
@@ -110,15 +110,15 @@ Python version 3.8.5 or above is necessary to use this software. Run the followi
 
 ### Installation
 
-Required python packages: pandas, tensorflow, numpy, PyWavelets, spectrum, stockwell
+Required python packages: pandas, tensorflow, numpy, cv2, sklearn
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/sandipanpaul06/SISSSCO.git
+   git clone https://github.com/sandipanpaul06/TrIdent.git
    ```
 3. Package installation
    ```sh
-   pip install pandas numpy tensorflow PyWavelets spectrum stockwell
+   pip install pandas tensorflow numpy cv2 sklearn
    ```
 4. For the packages already installed, upgrade the packages to the most updated version. For example
    ```js
@@ -134,44 +134,44 @@ Required python packages: pandas, tensorflow, numpy, PyWavelets, spectrum, stock
 
 1. Data preprocessing and model training:
 
-* 1.1. Open terminal and go to SISSSCO software directory. Example:
+* 1.1. Open terminal and go to TrIdent software directory. Example:
    ```sh
-   cd /Users/user/Desktop/SISSSCO
+   cd /Users/user/Desktop/TrIdent
    ```
 
 * 1.2. .ms output fles:
 
-* 1.2.1. The .ms files are located in "Datasets" folder in the SISSSCO software directory. For example:
+* 1.2.1. The .ms files are located in "Datasets" folder in the TrIdent software directory. For example:
    ```sh
    /Users/user/Desktop/SISSSCO/Datasets
    ```
-* 1.2.2. The "Datasets" folder has two sub-folders: "Neutral" and "Sweep". The neutral .ms files need to be placed in the "Neutral" folder, and the sweep .ms files need to be placed in the "Sweep" folder.
+* 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The neutral .ms files can be placed in the "Neutral" folder, and the sweep .ms files can be placed in the "Sweep" folder.
 
 * 1.2.3. 100 sample files each can be found in the "Neutral" and "Sweep" subfolders. These files can be accessed by (example directory):
    ```sh
-   /Users/user/Desktop/SISSSCO/Datasets/Neutral
+   /Users/user/Desktop/TrIdent/Datasets/Neutral
    ```
    ```sh
-   /Users/user/Desktop/SISSSCO/Datasets/Sweep
+   /Users/user/Desktop/TrIdent/Datasets/Sweep
    ```
-* 1.2.4. The sweep .ms files have a prefix "CEU_sweep", and the neutral .ms files have a prefix "CEU_neut", followed by consecutive numbers from 1 to 100. Example:
+* 1.2.4. The sweep .ms files have a prefix "Sweep", and the neutral .ms files have a prefix "Neut", followed by consecutive numbers from 1 to 100. Example:
    ```sh
-   CEU_sweep_1.ms, CEU_sweep_2.ms ... CEU_sweep_100.ms
+   Sweep_1.ms, Sweep_2.ms ... Sweep_100.ms
    ```
    ```sh
-   CEU_neut_1.ms, CEU_neut_2.ms ... CEU_neut_100.ms
+   Neut_1.ms, Neut_2.ms ... Neut_100.ms
    ```
 
-* 1.3. Run sum_stat_ms.py to generate summary statistics:
+* 1.3. Run image_generation_ms.py to generate summary statistics:
 
-Open terminal and go to SISSSCO software directory. Example:
+Open terminal and go to TrIdent software directory. Example:
    ```sh
-   cd /Users/user/Desktop/SISSSCO
+   cd /Users/user/Desktop/TrIdent
    ```
 
 * 1.3.1. Command to view the necessary arguments, run:
    ```sh
-   python sum_stat_ms.py -h
+   python image_generation_ms.py -h
    ```
 <br />
 <div align="center">
