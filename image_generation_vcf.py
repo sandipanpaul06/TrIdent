@@ -7,9 +7,10 @@ import argparse
 
 parser = argparse.ArgumentParser(description= 'Generate dataset for vcf')
 parser.add_argument('folder', type=str, help= 'folder within VCF folder where subfiles are saved')
+parser.add_argument('strands', type=int, help= 'number of haplotypes')
 parser.add_argument('prefix', type=str, help= 'file prefix')
-parser.add_argument('start', type=int, help= 'Start number of files of aforementioned file prefix')
-parser.add_argument('stop', type=int, help= 'Stop number of files of aforementioned file prefix')
+parser.add_argument('start', type=int, help= 'Start number of files with the file prefix')
+parser.add_argument('stop', type=int, help= 'Stop number of files with the file prefix')
 parser.add_argument('img_dim', type=int, help= 'Image dimension. For 299 x 299, put 299')
 parser.add_argument('outP', type=str, help= 'Output dataset name')
 
@@ -19,7 +20,7 @@ args = parser.parse_args()
 # In[40]:
 
 
-
+n_strands = args.strands
 strt = args.start
 stp = args.stop
 
@@ -141,7 +142,7 @@ mids = []
 
 for i in range(strt, stp+1):
     
-    image, mid = image_gen(num_text_file = i ,num_strands= 198, dim = dim_, window_length=wind, num_stride=2)
+    image, mid = image_gen(num_text_file = i ,num_strands= n_strands, dim = dim_, window_length=wind, num_stride=2)
     mids.append(mid)
     print(i)
     
