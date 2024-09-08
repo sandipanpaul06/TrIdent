@@ -35,6 +35,11 @@ X_test_img = np.concatenate(( test_sweep, test_neutral), axis = 0)
 mean = np.mean(X_train_img, axis=0)
 SD = np.std(X_train_img, axis=0)
 
+mean_fileName = './Image_datasets/' + args.modelName + '_mean.npy'
+SD_fileName = './Image_datasets/' + args.modelName + '_mean.npy'
+np.save(mean_fileName, mean)
+np.save(SD_fileName, SD)
+
 X_train_img = (X_train_img - mean)/(SD)
 X_test_img = (X_test_img - mean)/(SD)
 
