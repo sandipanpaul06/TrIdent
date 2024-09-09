@@ -15,9 +15,14 @@ args = parser.parse_args()
 # In[40]:
 
 
-filename = args.V_name
+filenamegz = args.V_name
 writeFolder = args.outF
 numm = args.num
+
+filename = filenamegz[:-3]
+
+com1 = 'gunzip -c ' + filenamegz + ' > ' + filename
+os.system(com1)
 
 
 path_read = "./VCF/" + str(filename)
@@ -31,6 +36,7 @@ for i in range(len(text)):
 		a[label] = col[9:]
 
 A.to_csv('./VCF/' + filename[:-4] + '.csv', index=False)
+com2 = 'rm ' + filename
 # In[33]:
 
 
