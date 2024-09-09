@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import re
 
 import argparse
 
@@ -19,16 +20,25 @@ writeFolder = args.outF
 numm = args.num
 
 
+path_read = "./VCF/" + str(filename)
+with open(path_read, 'r') as file:
+	text = file.readlines()
+a = pd.DataFrame()
+for i in range(len(text)):
+	if text[i][0] != '#':
+		col = re.split(r'\t+', text[i][:-1])
+		label = int(col[1])
+		a[label] = col[9:]
 
-
+A.to_csv('./VCF/' + filename[:-4] + '.csv', index=False)
 # In[33]:
 
 
-path_read = "./VCF/" + str(filename) + ".csv"
+
 path_write = "./VCF/"+ str(filename) + "_HT" + '.csv'
 
 
-a = pd.read_csv(path_read, header = None)
+#a = pd.read_csv(path_read, header = None)
 
 new_df = []
 
