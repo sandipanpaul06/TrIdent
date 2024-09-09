@@ -7,7 +7,6 @@ import argparse
 parser = argparse.ArgumentParser(description= 'VCF pre-processing: dividing CSV files exported from VCF files into window based subfiles')
 parser.add_argument('V_name', type=str, help= 'file name')
 parser.add_argument('outF', type=str, help= 'Output folder name')
-parser.add_argument('num', type=int, help= 'Number of SNPs in a file')
 
 args = parser.parse_args()
 
@@ -17,31 +16,40 @@ args = parser.parse_args()
 
 filenamegz = args.V_name
 writeFolder = args.outF
-numm = args.num
+numm = 500  ###change this
 
 filename = filenamegz[:-3]
 
-com1 = 'gunzip -c ' + filenamegz + ' > ' + filename
+com1 = 'gunzip -c ./VCF/' + filenamegz + ' > ./VCF/' + filename
 os.system(com1)
 
 
 path_read = "./VCF/" + str(filename)
 with open(path_read, 'r') as file:
 	text = file.readlines()
-a = pd.DataFrame()
+
+a = []
 for i in range(len(text)):
 	if text[i][0] != '#':
 		col = re.split(r'\t+', text[i][:-1])
-		label = int(col[1])
-		a[label] = col[9:]
+		row = []
+		row.append(int(col[1]))
+		row.extend(col[9:])
+		a.append(row)
 
-A.to_csv('./VCF/' + filename[:-4] + '.csv', index=False)
-com2 = 'rm ' + filename
+a = pd.DataFrame(a)
+a.to_csv('./VCF/' + filename[:-4] + '.csv', index=False, header=False)
+
+print('VCF to CSV: done')
+
+com2 = 'rm ./VCF/' + filename
+
+os.system(com2)
 # In[33]:
 
 
 
-path_write = "./VCF/"+ str(filename) + "_HT" + '.csv'
+path_write = "./VCF/"+ filename[:-4] + "_HT" + '.csv'
 
 
 #a = pd.read_csv(path_read, header = None)
@@ -101,7 +109,7 @@ for i in range(range_for):
 	start = i*10
 	end = start+numm
 	if end <= a.shape[1]:
-		fname = "./VCF/"+ writeFolder + '/'+ filename + "_" + str(i) + ".csv"
+		fname = "./VCF/"+ writeFolder + '/'+ filename[:-4] + "_" + str(i) + ".csv"
 		a.iloc[:, start:end].to_csv(fname, index=False)
 
 print('number of subfiles generated:', range_for)
