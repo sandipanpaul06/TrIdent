@@ -118,7 +118,7 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, sklearn
    ```
 3. Package installation
    ```sh
-   pip install pandas tensorflow numpy cv2 sklearn
+   pip install pandas tensorflow numpy opencv-python sklearn
    ```
 4. For the packages already installed, upgrade the packages to the most updated version. For example
    ```js
