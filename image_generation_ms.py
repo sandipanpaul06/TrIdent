@@ -61,9 +61,9 @@ def image_gen(num_text_file, num_strands, dim, window_length, num_stride):
     with open(path, 'r') as file:
         text = file.readlines()
     if len(text) == 0:
-        return 'fail'
+        return []
     elif text[2][:20] == 'trajectory too bigly':
-        return 'fail'
+        return []
     segsites = text[5][11:-2]
 
     strands = num_strands
@@ -195,7 +195,7 @@ while element_counter < num_:
     
     counter+=1
 
-    if image == 'fail':
+    if len(image)==0:
         print('fail')
     
     elif len(image) != 0:
