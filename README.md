@@ -110,7 +110,7 @@ Python version 3.8.5 or above is necessary to use this software. Run the followi
 
 ### Installation
 
-Required python packages: pandas, tensorflow, numpy, opencv-python, sklearn
+Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 1. Clone the repo
    ```sh
@@ -118,7 +118,7 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, sklearn
    ```
 3. Package installation
    ```sh
-   pip install pandas tensorflow numpy opencv-python sklearn
+   pip install pandas tensorflow numpy opencv-python scikit-learn
    ```
 4. For the packages already installed, upgrade the packages to the most updated version. For example
    ```js
