@@ -110,7 +110,7 @@ Python version 3.8.5 or above is necessary to use this software. Run the followi
 
 ### Installation
 
-Required python packages: pandas, tensorflow, numpy, cv2, sklearn
+Required python packages: pandas, tensorflow, numpy, opencv-python, sklearn
 
 1. Clone the repo
    ```sh
