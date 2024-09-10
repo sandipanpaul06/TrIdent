@@ -106,7 +106,7 @@ Python version 3.8.5 or above is necessary to use this software. Run the followi
 
 ### Installation
 
-Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
+Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn, matplotlib
 
 1. Clone the repo
    ```sh
@@ -114,7 +114,7 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    ```
 3. Package installation
    ```sh
-   pip install pandas tensorflow numpy opencv-python-headless scikit-learn
+   pip install pandas tensorflow numpy opencv-python-headless scikit-learn matplotlib
    ```
 4. For the packages already installed, upgrade the packages to the most updated version. For example
    ```js
