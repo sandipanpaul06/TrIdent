@@ -137,26 +137,11 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 * 1.2. .ms output fles:
 
-* 1.2.1. The .ms files are located in "Datasets" folder in the TrIdent software directory. For example:
-   ```sh
-   /Users/user/Desktop/TrIdent/Datasets
-   ```
-* 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The toy neutral .ms files are in the "Neutral" folder, and the sweep .ms files are in the "Sweep" folder.
+* 1.2.1. The .ms files are located in "Datasets" folder in the TrIdent software directory. For example: */Users/user/Desktop/TrIdent/Datasets*
+  
+* 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The toy neutral .ms files are in the "Neutral" folder (*/Users/user/Desktop/TrIdent/Datasets/Neutral*), and the sweep .ms files are in the "Sweep" folder (*/Users/user/Desktop/TrIdent/Datasets/Sweep*).
 
-* 1.2.3. 20 sample files each can be found in the "Neutral" and "Sweep" subfolders. These files can be accessed by (example directory):
-   ```sh
-   /Users/user/Desktop/TrIdent/Datasets/Neutral
-   ```
-   ```sh
-   /Users/user/Desktop/TrIdent/Datasets/Sweep
-   ```
-* 1.2.4. The sweep .ms files have a prefix "Sweep", and the neutral .ms files have a prefix "Neut", followed by consecutive numbers from 1 to 100. Example:
-   ```sh
-   Sweep_1.ms, Sweep_2.ms ... Sweep_20.ms
-   ```
-   ```sh
-   Neut_1.ms, Neut_2.ms ... Neut_20.ms
-   ```
+* 1.2.3. The sweep .ms files have a prefix "Sweep", and the neutral .ms files have a prefix "Neut", followed by consecutive numbers from 1 to 100. Example: *Sweep_1.ms, Sweep_2.ms ... Sweep_20.ms* *Neut_1.ms, Neut_2.ms ... Neut_20.ms*
 
 * 1.3. Mode: **image_generation_ms** to generate input image dataset:
 
