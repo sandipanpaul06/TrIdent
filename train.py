@@ -66,7 +66,7 @@ model = Model(inp2, x)
 X_train = model.predict(X_train_img)
 X_test = model.predict(X_test_img)
 
-logreg = LogisticRegression(penalty= 'elasticnet', max_iter= 20000, solver = 'saga', C=0.05, l1_ratio= 0.5)
+logreg = LogisticRegression(penalty= 'elasticnet', max_iter= 20000, solver = 'saga', C=1.0, l1_ratio= 0.5)
 logreg.fit(X_train, Y_train)
 
 y_pred = logreg.predict_proba(X_test)
