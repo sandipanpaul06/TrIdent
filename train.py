@@ -1,3 +1,12 @@
+import argparse
+
+parser = argparse.ArgumentParser(description= 'Train TrIdent model')
+parser.add_argument('trS', type=str, help= 'Sweep file')
+parser.add_argument('trN', type=str, help= 'Neutral file')
+parser.add_argument('splt', type=float, help= 'Train/test split')
+parser.add_argument('modelName', type=str, help= 'Name of model')
+args = parser.parse_args()
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,23 +21,22 @@ from tensorflow.keras.models import load_model, Sequential, Model
 from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score, roc_curve
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 import pickle
-import argparse
 
-parser = argparse.ArgumentParser(description= 'Train TrIdent model')
-parser.add_argument('trS', type=str, help= 'Sweep training file')
-parser.add_argument('trN', type=str, help= 'Neutral training file')
-parser.add_argument('tsS', type=str, help= 'Sweep test file')
-parser.add_argument('tsN', type=str, help= 'Neutral test file')
-parser.add_argument('modelName', type=str, help= 'Name of model')
-args = parser.parse_args()
 
 model_name = args.modelName +'.pkl'
+spl = args.splt
 
-train_neutral = np.load("./Image_datasets/" + args.trN)
-train_sweep = np.load("./Image_datasets/" + args.trS)
+neutral = np.load("./Image_datasets/" + args.trN +'.npy')
+sweep = np.load("./Image_datasets/" + args.trS +'.npy')
 
-test_neutral = np.load("./Image_datasets/" + args.tsN)
-test_sweep = np.load("./Image_datasets/" + args.tsS)
+nSplit = int(neutral.shape[0]*spl)
+sSplit = int(sweep.shape[0]*spl)
+
+train_neutral = neutral[:nSplit]
+train_sweep = sweep[:nSplit]
+
+test_neutral = neutral[nSplit:]
+test_sweep = sweep[nSplit:]
 
 X_train_img = np.concatenate(( train_sweep, train_neutral), axis = 0)
 X_test_img = np.concatenate(( test_sweep, test_neutral), axis = 0)
@@ -36,7 +44,7 @@ mean = np.mean(X_train_img, axis=0)
 SD = np.std(X_train_img, axis=0)
 
 mean_fileName = './Image_datasets/' + args.modelName + '_mean.npy'
-SD_fileName = './Image_datasets/' + args.modelName + '_mean.npy'
+SD_fileName = './Image_datasets/' + args.modelName + '_SD.npy'
 np.save(mean_fileName, mean)
 np.save(SD_fileName, SD)
 
