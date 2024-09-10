@@ -99,10 +99,6 @@ Natural selection leaves detectable patterns of altered spatial diversity within
 ### Prerequisites
 
 Python version 3.8.5 or above is necessary to use this software. Run the following commands to ensure you have the required version.
-* set python3 as python
-  ```sh
-  alias python=python3
-  ```
 * check python3 version
   ```sh
   python --version
@@ -118,7 +114,7 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    ```
 3. Package installation
    ```sh
-   pip install pandas tensorflow numpy opencv-python scikit-learn
+   pip install pandas tensorflow numpy opencv-python-headless scikit-learn
    ```
 4. For the packages already installed, upgrade the packages to the most updated version. For example
    ```js
@@ -145,9 +141,9 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    ```sh
    /Users/user/Desktop/SISSSCO/Datasets
    ```
-* 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The neutral .ms files can be placed in the "Neutral" folder, and the sweep .ms files can be placed in the "Sweep" folder.
+* 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The toy neutral .ms files are in the "Neutral" folder, and the sweep .ms files are in the "Sweep" folder.
 
-* 1.2.3. 100 sample files each can be found in the "Neutral" and "Sweep" subfolders. These files can be accessed by (example directory):
+* 1.2.3. 20 sample files each can be found in the "Neutral" and "Sweep" subfolders. These files can be accessed by (example directory):
    ```sh
    /Users/user/Desktop/TrIdent/Datasets/Neutral
    ```
