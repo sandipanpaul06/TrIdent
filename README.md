@@ -130,9 +130,9 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 1. Data preprocessing and model training:
 
-* 1.1. Open terminal and go to TrIdent software directory. Example:
+* 1.1. Go to TrIdent software directory. Example:
    ```sh
-   cd /Users/user/Desktop/TrIdent
+   cd TrIdent
    ```
 
 * 1.2. .ms output fles:
@@ -158,77 +158,63 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    Neut_1.ms, Neut_2.ms ... Neut_20.ms
    ```
 
-* 1.3. Run image_generation_ms.py to generate input image dataset:
-
-Open terminal and go to TrIdent software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/TrIdent
-   ```
+* 1.3. Mode: **image_generation_ms** to generate input image dataset:
 
 * 1.3.1. Command to view the necessary arguments, run:
    ```sh
-   python image_generation_ms.py -h
+   python TrIdent.py image_generation_ms -h
    ```
-* 1.3.2. pref: .ms file prefix, outF: Output filename, nStrand: number of haplotypes, subfolder_name: Name of the subfolder (that contains the simulations), number: Number of .ms files of the chosen class, start: Start number of .ms files, img_dim: Image dimension. For 299 x 299, put 299
+* 1.3.2. Arguments: pref: .ms file prefix, outF: Output filename, nStrand: number of haplotypes, subfolder_name: Name of the subfolder (that contains the simulations), number: Number of .ms files of the chosen class, start: Start number of .ms files, img_dim: Image dimension. For 299 x 299, put 299
 
 * 1.3.3. Example run with sample .ms files:
 
    ```sh
-   python image_generation_ms.py Neut neutfile 198 Neutral 10 1 299
+   python TrIdent.py image_generation_ms Neut neutfile 198 Neutral 10 1 299
    ```
    ```sh
-   python image_generation_ms.py Sweep sweepfile 198 Sweep 10 1 299
+   python TrIdent.py image_generation_ms Sweep sweepfile 198 Sweep 10 1 299
    ```
 
 * 1.3.4. Output file will be saved in "Image_datasets" folder and output message will print which ms files passed and 'fail'ed the qualification criteria
 
 
-* 1.4. Run train.py to train and test the binary classifier:
+* 1.4. Mode: **train** to train and test the binary classifier:
 
-Open terminal and go to TrIdent software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/TrIdent
-   ```
 
 * 1.4.1. To view the necessary arguments, run:
    ```sh
-   python train.py -h
+   python TrIdent.py train -h
    ```
 
-* 1.4.2. trS: Sweep filename, trN: Neutral filename, splt: Train/test split, modelName: Name of model
+* 1.4.2. Arguments: trS: Sweep filename, trN: Neutral filename, splt: Train/test split, modelName: Name of model
 
 * 1.4.3. Example run with sample summary statistic file:
 
    ```sh
-   python train.py sweepfile neutfile 0.5 expModel
+   python TrIdent.py train sweepfile neutfile 0.5 expModel
    ```
 
 
-* 1.4.3. Pixel-wise mean and standard deviation files will be saved in Image_datasets. Prediction on N sweeps and N neuts (N = (1-splt)*Number of .ms files of the chosen class), consecutively, will be saved as 'modelName'_test_prediction.npy
+* 1.4.4. Pixel-wise mean and standard deviation files will be saved in Image_datasets. Prediction on N sweeps and N neuts (N = (1-splt)*Number of .ms files of the chosen class), consecutively, will be saved as 'modelName'_test_prediction.npy
 
 
 
 
 2. Model testing:
 
-* 2.1. VCF pre-processing: dividing CSV files exported from VCF files into window based subfiles:
-
-Open terminal and go to TrIdent software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/TrIdent
-   ```
+* 2.1. Mode: **preprocess_VCF** dividing CSV files exported from VCF files into window based subfiles:
 
 
 * 2.1.1 To view the necessary arguments, run:
    ```sh
-   python preprocess_VCF.py -h
+   python TrIdent.py preprocess_VCF -h
    ```
 * 2.1.2. Arguments are: V_name: file name (gzipped .vcf), outF: Output folder name
 
 * 2.1.3.  Example run with sample file:
 
    ```sh
-   python preprocess_VCF.py chrom22.vcf.gz chr22
+   python TrIdent.py preprocess_VCF chrom22.vcf.gz chr22
    ```
 
 * 2.1.4 Output (.npy) will be saved in "VCF_datasets" folder.
@@ -236,17 +222,12 @@ Open terminal and go to TrIdent software directory. Example:
 
 
 
-* 2.2. Geneate image dataset from parsed vcf file:
-
-Open terminal and go to TrIdent software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/TrIdent
-   ```
+* 2.2. Mode: **image_generation_vcf** geneate image dataset from parsed vcf file:
 
 
 * 2.2.1 To view the necessary arguments, run:
    ```sh
-   python image_generation_vcf.py -h
+   python TrIdent.py image_generation_vcf -h
    ```
 
 * 2.2.2. Arguments are: folder: folder within VCF folder where subfiles are saved, strands: number of haplotypes, prefix: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, img_dim: Image dimension. For 299 x 299, put 299, outP: Output dataset name
@@ -254,17 +235,17 @@ Open terminal and go to TrIdent software directory. Example:
 * 2.2.3.  Example run with sample file:
 
    ```sh
-   python image_generation_vcf.py chr22 198 chrom22 1 10 299 testVCF
+   python TrIdent.py image_generation_vcf chr22 198 chrom22 1 10 299 testVCF
    ```
 
 * 2.2.4 Output will be saved in "VCF_datasets" folder.
 
 
-* 2.3 Run prediction.py on empirical image dataset file: 
+* 2.3 Mode: **prediction** on empirical image dataset file: 
 
 * 2.3.1. To view the necessary arguments, run:
    ```sh
-   python prediction.py -h
+   python TrIdent.py prediction -h
    ```
 
 * 2.3.2. Arguments are: fileName: Name of the file to predict on, modelName: Model Name
@@ -272,7 +253,7 @@ Open terminal and go to TrIdent software directory. Example:
 * 2.3.3. Example run with sample summary statistic file:
 
    ```sh
-   python prediction.py testVCF expModel
+   python TrIdent.py prediction testVCF expModel
    ```
 
 <!-- LICENSE -->
