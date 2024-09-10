@@ -152,13 +152,13 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    ```
 * 1.2.4. The sweep .ms files have a prefix "Sweep", and the neutral .ms files have a prefix "Neut", followed by consecutive numbers from 1 to 100. Example:
    ```sh
-   Sweep_1.ms, Sweep_2.ms ... Sweep_100.ms
+   Sweep_1.ms, Sweep_2.ms ... Sweep_20.ms
    ```
    ```sh
-   Neut_1.ms, Neut_2.ms ... Neut_100.ms
+   Neut_1.ms, Neut_2.ms ... Neut_20.ms
    ```
 
-* 1.3. Run image_generation_ms.py to generate summary statistics:
+* 1.3. Run image_generation_ms.py to generate input image dataset:
 
 Open terminal and go to TrIdent software directory. Example:
    ```sh
@@ -169,342 +169,110 @@ Open terminal and go to TrIdent software directory. Example:
    ```sh
    python image_generation_ms.py -h
    ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/sumstatms.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 1.3.2. pref: .ms file prefix, class_type: 1 for sweep or 0 for neutral, number: number of simulations (numbered consecutively starting from 1)
+* 1.3.2. pref: .ms file prefix, outF: Output filename, nStrand: number of haplotypes, subfolder_name: Name of the subfolder (that contains the simulations), number: Number of .ms files of the chosen class, start: Start number of .ms files, img_dim: Image dimension. For 299 x 299, put 299
 
 * 1.3.3. Example run with sample .ms files:
 
    ```sh
-   python sum_stat_ms.py CEU_neut 0 100
+   python image_generation_ms.py Neut neutfile 198 Neutral 10 1 299
    ```
    ```sh
-   python sum_stat_ms.py CEU_sweep 1 100
+   python image_generation_ms.py Sweep sweepfile 198 Sweep 10 1 299
    ```
 
-* 1.3.4. Output file will be saved in "Summary_statistics" folder and output message will print the size of the dataset (number of qualified samples, 9 summary statistics * 128 windows):
-   
-   Neutral:
+* 1.3.4. Output file will be saved in "Image_datasets" folder and output message will print which ms files passed and 'fail'ed the qualification criteria
+
+
+* 1.4. Run train.py to train and test the binary classifier:
+
+Open terminal and go to TrIdent software directory. Example:
    ```sh
-   dataset shape :  (100, 1152)
+   cd /Users/user/Desktop/TrIdent
    ```
 
-   Sweep:
+* 1.4.1. To view the necessary arguments, run:
    ```sh
-   dataset shape :  (100, 1152)
+   python train.py -h
    ```
 
+* 1.4.2. trS: Sweep filename, trN: Neutral filename, splt: Train/test split, modelName: Name of model
 
-* 1.4. Run wavelet_decomposition.py to time-frequency images dataset for wavelet decomposition:
-
-Open terminal and go to SISSSCO software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/SISSSCO
-   ```
-
-* 1.4.1. Constraint: the dataset shape of both neutral and sweep classes need to be the same. If not, the summary statistic dataset with higher number of qualified samples need to be resized to have the same size as the dataset with lower number of qualified samples.
-   
-
-* 1.4.2. To view the necessary arguments, run:
-   ```sh
-   python wavelet_decomposition.py -h
-   ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/wavelet.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 1.4.3. sweep_filename: name of the summary statistic file for class sweep, neutral_filename: name of the summary statistic file for class neutral, train = number of samples to be used for training, test = number of samples to be used for testing, val = number of samples to be used for validation. Train + Test + Val <= total number of samples in the summary statistic dataset. The same train, test and val must be used throughout the model training process.
-
-* 1.4.4. Example run with sample summary statistic file:
+* 1.4.3. Example run with sample summary statistic file:
 
    ```sh
-   python wavelet_decomposition.py training_Sweep.csv training_Neutral.csv 60 20 20
+   python train.py sweepfile neutfile 0.5 expModel
    ```
 
 
-* 1.4.5. Output files will be saved in "TFA" folder. The files are: standardized time-frequency image dataset (.npy), mean and standard deviation of the images (.npy), mean heatmap of the unstandardized and standardized images (.png).
+* 1.4.3. Pixel-wise mean and standard deviation files will be saved in Image_datasets. Prediction on N sweeps and N neuts (N = (1-splt)*Number of .ms files of the chosen class), consecutively, will be saved as 'modelName'_test_prediction.npy
 
-
-
-
-* 1.5. Run multitaper_analysis.py to time-frequency images dataset for Multitaper Spectral Analysis:
-
-Open terminal and go to SISSSCO software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/SISSSCO
-   ```
-
-* 1.5.1. Constraint: the dataset shape of both neutral and sweep classes need to be the same. If not, the summary statistic dataset with higher number of qualified samples need to be resized to have the same size as the dataset with lower number of qualified samples.
-   
-
-* 1.5.2. To view the necessary arguments, run:
-   ```sh
-   python multitaper_analysis.py -h
-   ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/multitaper.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 1.5.3. Arguments: sweep_filename: name of the summary statistic file for class sweep, neutral_filename: name of the summary statistic file for class neutral, train = number of samples to be used for training, test = number of samples to be used for testing, val = number of samples to be used for validation. Train + Test + Val <= total number of samples in the summary statistic dataset. The same train, test and val must be used throughout the model training process.
-
-* 1.5.4. Example run with sample summary statistic file:
-
-   ```sh
-   python multitaper_analysis.py training_Sweep.csv training_Neutral.csv 60 20 20
-   ```
-
-
-* 1.5.5. Output files will be saved in "TFA" folder. The files are: standardized time-frequency image dataset (.npy), mean and standard deviation of the images (.npy), mean heatmap of the unstandardized and standardized images (.png).
-
-
-* 1.6. Run s_transform.py to time-frequency imagee dataset for S transform:
-
-Open terminal and go to SISSSCO software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/SISSSCO
-   ```
-
-* 1.6.1. Constraint: the dataset shape of both neutral and sweep classes need to be the same. If not, the summary statistic dataset with higher number of qualified samples need to be resized to have the same size as the dataset with lower number of qualified samples.
-   
-
-* 1.6.2. To view the necessary arguments, run:
-   ```sh
-   python s_transform.py -h
-   ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/stransform.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 1.6.3. sweep_filename: name of the summary statistic file for class sweep, neutral_filename: name of the summary statistic file for class neutral, train = number of samples to be used for training, test = number of samples to be used for testing, val = number of samples to be used for validation. Train + Test + Val <= total number of samples in the summary statistic dataset. The same train, test and val must be used throughout the model training process.
-
-* 1.6.4. Example run with sample summary statistic file:
-
-   ```sh
-   python s_transform.py training_Sweep.csv training_Neutral.csv 60 20 20
-   ```
-
-
-* 1.6.5. Output files will be saved in "TFA" folder. The files are: standardized time-frequency image dataset (.npy), mean and standard deviation of the images (.npy), mean heatmap of the unstandardized and standardized images (.png).
-
-* 1.6. Train and save the model:
-
-* 1.7.1. To view the necessary arguments, run:
-
-Open terminal and go to SISSSCO software directory. Example:
-   ```sh
-   cd /Users/user/Desktop/SISSSCO
-   ```
-
-   ```sh
-   python save_model.py -h
-   ```
-
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/save_model.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-
-* 1.7.2. Arguments are: train-test-validation split, training datasets for wavelet-multitaper-stockwell, testing datasets for wavelet-multitaper-stockwell, validation datasets for wavelet-multitaper-stockwell, and train-test-validation label files.
-
-* 1.7.3. Example run with sample file:
-
-   ```sh
-   python save_model.py 60 20 20 X_train_wavelet.npy X_train_multitaper.npy X_train_stockwell.npy X_test_wavelet.npy X_test_multitaper.npy X_test_stockwell.npy X_val_wavelet.npy X_val_multitaper.npy X_val_stockwell.npy Y_train.npy Y_test.npy Y_val.npy
-   ```
-
-
-* 1.7.4. Model will be saved as "saved_model", and test dataset predictions will be saved as "test_prediction.csv" in the SISSSCO software directory. 
 
 
 
 2. Model testing:
 
-* 2.1. Parsing a VCF file:
+* 2.1. VCF pre-processing: dividing CSV files exported from VCF files into window based subfiles:
 
-Open terminal and go to SISSSCO software directory. Example:
+Open terminal and go to TrIdent software directory. Example:
    ```sh
-   cd /Users/user/Desktop/SISSSCO
+   cd /Users/user/Desktop/TrIdent
    ```
 
 
 * 2.1.1 To view the necessary arguments, run:
    ```sh
-   python VCF_parser.py -h
+   python preprocess_VCF.py -h
    ```
-   
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/vcfparser.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-
-* 2.1.2. Arguments are: name of the vcf file
+* 2.1.2. Arguments are: V_name: file name (gzipped .vcf), outF: Output folder name
 
 * 2.1.3.  Example run with sample file:
 
    ```sh
-   python VCF_parser.py CEU22.vcf
+   python preprocess_VCF.py chrom22.vcf.gz chr22
    ```
 
-* 2.1.4 Output (.npy) will be saved in "Parsed_vcf" folder.
+* 2.1.4 Output (.npy) will be saved in "VCF_datasets" folder.
 
 
 
 
-* 2.2. Geneate summary statistics from parsed vcf file:
+* 2.2. Geneate image dataset from parsed vcf file:
 
-Open terminal and go to SISSSCO software directory. Example:
+Open terminal and go to TrIdent software directory. Example:
    ```sh
-   cd /Users/user/Desktop/SISSSCO
+   cd /Users/user/Desktop/TrIdent
    ```
 
 
 * 2.2.1 To view the necessary arguments, run:
    ```sh
-   python sum_stat_vcf.py -h
+   python image_generation_vcf.py -h
    ```
 
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/sumstatvcf.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 2.2.2. Arguments are: name of the parsed vcf file
+* 2.2.2. Arguments are: folder: folder within VCF folder where subfiles are saved, strands: number of haplotypes, prefix: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, img_dim: Image dimension. For 299 x 299, put 299, outP: Output dataset name
 
 * 2.2.3.  Example run with sample file:
 
    ```sh
-   python sum_stat_vcf.py parsed_CEU22.npy
+   python image_generation_vcf.py chr22 198 chrom22 1 10 299 testVCF
    ```
 
-* 2.2.4 Output will be saved in "Summary_statistics" folder. Please note down the number of qualified samples from the shape of the file as discussed in 1.3.4.
+* 2.2.4 Output will be saved in "VCF_datasets" folder.
 
 
-* 2.3 Run wavelet_decomposition_vcf.py on empirical summary statistic file: 
+* 2.3 Run prediction.py on empirical image dataset file: 
 
 * 2.3.1. To view the necessary arguments, run:
    ```sh
-   python wavelet_decomposition_vcf.py -h
+   python prediction.py -h
    ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/wavelet_vcf.png" alt="Logo" width="10000">
-  </a>
-</div>   
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 2.3.2. filename: name of the empirical summary statistic file
+* 2.3.2. Arguments are: fileName: Name of the file to predict on, modelName: Model Name
 
 * 2.3.3. Example run with sample summary statistic file:
 
    ```sh
-   python wavelet_decomposition_vcf.py empirical__CEU22.csv
-   ```
-
-
-* 2.4 Run multitaper_analysis_vcf.py on empirical summary statistic file: 
-
-* 2.4.1. To view the necessary arguments, run:
-   ```sh
-   python multitaper_analysis_vcf.py -h
-   ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/multitaper_vcf.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 2.4.2. filename: name of the empirical summary statistic file
-
-* 2.4.3. Example run with sample summary statistic file:
-
-   ```sh
-   python multitaper_analysis_vcf.py empirical__CEU22.csv
-   ```
-
-
-* 2.5 Run s_transform_vcf.py on empirical summary statistic file: 
-
-* 2.4.1. To view the necessary arguments, run:
-   ```sh
-   python s_transform_vcf.py -h
-   ```
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/stockwell_vcf.png" alt="Logo" width="10000">
-  </a>
-</div>   
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-* 2.4.2. filename: name of the empirical summary statistic file
-
-* 2.4.3. Example run with sample summary statistic file:
-
-   ```sh
-   python s_transform_vcf.py empirical__CEU22.csv
-   ```
-
-
-
-
-* 2.6 Run run_saved_model.py to get the empirical prediction:
-
-  * 2.6.1 To view the necessary arguments, run:
-   ```sh
-   python run_saved_model.py -h
-
-<br />
-<div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
-    <img src="images/runsavedmodel.png" alt="Logo" width="10000">
-  </a>
-</div>  
-
-  * Arguments are: wavelet, multitaper and stockwell image datasets and number of qualified samples from 2.2.4
-  * Predictions will be saved as "prdiction_empirical_(vcf file name).csv" in the SISSSCO software directory. 
-
-* 2.4.3. Example run with sample image datasets:
-
-   ```sh
-   python run_saved_model.py X_CEU22_stockwell.npy X_CEU22_multitaper.npy X_CEU22_wavelet.npy 22942
+   python prediction.py testVCF expModel
    ```
 
 <!-- LICENSE -->
