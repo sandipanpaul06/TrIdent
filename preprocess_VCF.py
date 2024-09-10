@@ -62,8 +62,9 @@ for i in range(2, a.shape[1]-1):
 	c2 = []
 	for j in b:
 
-		d = int(j[0])
-		e = int(j[-1])
+		splt = j.split('|')
+		d = int(splt[0])
+		e = int(splt[1])
 		c1.append(d)
 		c2.append(e)
 
@@ -75,6 +76,9 @@ A = pd.DataFrame(new_df)
 A.columns = list(a[1])
 
 A.to_csv(path_write, index=False)
+
+com3 = 'rm ./VCF/' + filename[:-4] + '.csv'
+os.system(com3)
 
 print('step 1 complete')
 
@@ -88,7 +92,7 @@ Sites = A.columns
 a = []
 sites = []
 
-print(len(Sites))
+#print(len(Sites))
 
 for col_ in range(A.shape[1]):
     col1 = list(A.iloc[:, col_])
@@ -99,7 +103,7 @@ for col_ in range(A.shape[1]):
         
 a = pd.DataFrame(a)
 a = a.T
-print(len(Sites))
+#print(len(Sites))
 a.columns = sites
 
 
@@ -109,7 +113,7 @@ for i in range(range_for):
 	start = i*10
 	end = start+numm
 	if end <= a.shape[1]:
-		fname = "./VCF/"+ writeFolder + '/'+ filename[:-4] + "_" + str(i) + ".csv"
+		fname = "./VCF/"+ writeFolder + '/'+ filename[:-4] + "_" + str(i+1) + ".csv"
 		a.iloc[:, start:end].to_csv(fname, index=False)
 
 print('number of subfiles generated:', range_for)
