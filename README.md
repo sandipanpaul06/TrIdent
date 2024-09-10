@@ -23,7 +23,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/sandipanpaul06/SISSSCO">
+  <a href="https://github.com/sandipanpaul06/TrIdent">
     <img src="images/fau_logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -139,7 +139,7 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 * 1.2.1. The .ms files are located in "Datasets" folder in the TrIdent software directory. For example:
    ```sh
-   /Users/user/Desktop/SISSSCO/Datasets
+   /Users/user/Desktop/TrIdent/Datasets
    ```
 * 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The toy neutral .ms files are in the "Neutral" folder, and the sweep .ms files are in the "Sweep" folder.
 
