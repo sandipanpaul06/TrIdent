@@ -142,7 +142,7 @@ mids = []
 
 for i in range(strt, stp+1):
     
-    image, mid = image_gen(num_text_file = i ,num_strands= n_strands, dim = dim_, window_length=wind, num_stride=2)
+    image, mid = image_gen(num_text_file = i ,num_strands= n_strands, dim = dim_, window_length=25, num_stride=2)
     mids.append(mid)
     print(i)
     
@@ -152,13 +152,13 @@ for i in range(strt, stp+1):
             image_dataset[i-strt][r][c][1] = image[r][c]
             image_dataset[i-strt][r][c][2] = image[r][c]
     if i%1000 == 0:
-        np.save('./VCF/'+outFile+'.npy', image_dataset)
-        np.save('./VCF/'+outFile+'_pos.npy', np.array(mids))
+        np.save('./VCF_datasets/'+outFile+'.npy', image_dataset)
+        np.save('./VCF_datasets/'+outFile+'_pos.npy', np.array(mids))
 
 
 
 
 
 
-np.save('./VCF/'+outFile+'.npy', image_dataset)
-np.save('./VCF/'+outFile+'_pos.npy', np.array(mids))
+np.save('./VCF_datasets/'+outFile+'.npy', image_dataset)
+np.save('./VCF_datasets/'+outFile+'_pos.npy', np.array(mids))

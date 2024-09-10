@@ -56,24 +56,21 @@ path_write = "./VCF/"+ filename[:-4] + "_HT" + '.csv'
 
 new_df = []
 
-for i in range(2, a.shape[1]-1):
-	b = list(a[i])
-	c1 = []
-	c2 = []
-	for j in b:
 
-		splt = j.split('|')
-		d = int(splt[0])
-		e = int(splt[1])
-		c1.append(d)
-		c2.append(e)
-
-	new_df.append(c1)
-	new_df.append(c2)
+for i in range(1, a.shape[1]):
+	row = list(a[i])
+	r1 = []
+	r2 = []
+	for r in row:
+		splt = r.split('|')
+		r1.append(int(splt[0]))
+		r2.append(int(splt[1]))
+	new_df.append(r1)
+	new_df.append(r2)
 
 A = pd.DataFrame(new_df)
 
-A.columns = list(a[1])
+A.columns = list(a[0])
 
 A.to_csv(path_write, index=False)
 
@@ -87,34 +84,15 @@ subdiving files
 '''
 os.mkdir('./VCF/'+writeFolder)
 
-Sites = A.columns
-    
-a = []
-sites = []
 
-#print(len(Sites))
-
-for col_ in range(A.shape[1]):
-    col1 = list(A.iloc[:, col_])
-    
-    if sum(col1) >2 and sum(col1) < 196:
-        a.append(col1)
-        sites.append(Sites[col_])
-        
-a = pd.DataFrame(a)
-a = a.T
-#print(len(Sites))
-a.columns = sites
-
-
-range_for = a.shape[1]//10
+range_for = A.shape[1]//10
 
 for i in range(range_for):
 	start = i*10
 	end = start+numm
-	if end <= a.shape[1]:
+	if end <= A.shape[1]:
 		fname = "./VCF/"+ writeFolder + '/'+ filename[:-4] + "_" + str(i+1) + ".csv"
-		a.iloc[:, start:end].to_csv(fname, index=False)
+		A.iloc[:, start:end].to_csv(fname, index=False)
 
 print('number of subfiles generated:', range_for)
 
