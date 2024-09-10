@@ -2,7 +2,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description= 'Prediction on Empirical Data')
 parser.add_argument('fileName', type=str, help= 'Name of the file to predict on')
-parser.add_argument('modelName', type=int, help= 'Model Name')
+parser.add_argument('modelName', type=str, help= 'Model Name')
 
 args = parser.parse_args()
 
@@ -37,9 +37,7 @@ from tensorflow.keras.models import load_model, Sequential, Model
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 
 from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score, roc_curve
-import seaborn as sn
-from matplotlib.colors import ListedColormap
-import matplotlib.pyplot as plt
+
 
 
 
@@ -48,11 +46,11 @@ import matplotlib.pyplot as plt
 print('Importing packages ... done')
 
 mean = np.load('./Image_datasets/'  + mName + "_mean.npy")
-SD = np.load('./Image_datasets/'  + mName + "SD.npy")
+SD = np.load('./Image_datasets/'  + mName + "_SD.npy")
 
 
 
-X_emp_img = np.load('./VCF_Datasets/X_chr_'+ str(chr_num)+ ".npy")
+X_emp_img = np.load('./VCF_datasets/'+ fName+ ".npy")
 
 print('Loading required dataset ... done')
 
@@ -91,11 +89,11 @@ print('Loading pre-trained model ... done')
 Training and testing logistic regression model
 '''
 
-with open(mName, 'rb') as f:
+with open(mName+'.pkl', 'rb') as f:
     logreg = pickle.load(f)
 
 
 y_emp_proba = logreg.predict_proba(X_emp)
 y_emp_sweep_proba = y_emp_proba[:, 1]
 
-np.save('./Predictions/' +'prediction_' +fName[:-4], y_emp_sweep_proba)
+np.save('./Predictions/' +'prediction_' +fName, y_emp_sweep_proba)
