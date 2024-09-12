@@ -7,12 +7,12 @@ import argparse
 
 parser = argparse.ArgumentParser(description= 'Generate images from .ms files')
 parser.add_argument('pref', type=str, help= '.ms file prefix')
-parser.add_argument('outF', type=str, help= 'Output filename')
-parser.add_argument('nStrand', type=int, help= 'Number of haplotypes')
-parser.add_argument('subfolder_name', type=str, help= 'Name of the subfolder')
-parser.add_argument('number', type=int, help= 'Number of .ms files of the chosen class')
+parser.add_argument('outFile', type=str, help= 'Output filename')
+parser.add_argument('nHap', type=int, help= 'Number of haplotypes')
+parser.add_argument('subFolder', type=str, help= 'Name of the subfolder')
+parser.add_argument('n', type=int, help= 'Number of .ms files of the chosen class')
 parser.add_argument('start', type=int, help= 'Start number of .ms files')
-parser.add_argument('img_dim', type=int, help= 'Image dimension. For 299 x 299, put 299')
+parser.add_argument('imgDim', type=int, help= 'Image dimension. For 299 x 299, put 299')
 
 args = parser.parse_args()
 
@@ -21,12 +21,12 @@ args = parser.parse_args()
 
 
 val = args.pref
-nS = args.nStrand
-num_ = args.number
-outFile = args.outF
-subf = args.subfolder_name
+nS = args.nHap
+num_ = args.n
+outFile = args.outFile
+subf = args.subFolder
 strt = args.start
-dim_ = args.img_dim
+dim_ = args.imgDim
 
 
 

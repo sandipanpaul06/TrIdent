@@ -96,4 +96,4 @@ with open(mName+'.pkl', 'rb') as f:
 y_emp_proba = logreg.predict_proba(X_emp)
 y_emp_sweep_proba = y_emp_proba[:, 1]
 
-np.save('./Predictions/' +'prediction_' +fName, y_emp_sweep_proba)
+np.savetxt('./Predictions/' +'prediction_' +fName+'.txt', y_emp_sweep_proba)
