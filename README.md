@@ -149,15 +149,15 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    ```sh
    python TrIdent.py image_generation_ms -h
    ```
-* 1.3.2. Arguments: pref: .ms file prefix, outF: Output filename, nStrand: number of haplotypes, subfolder_name: Name of the subfolder (that contains the simulations), number: Number of .ms files of the chosen class, start: Start number of .ms files, img_dim: Image dimension. For 299 x 299, put 299
+* 1.3.2. Arguments: pref: .ms file prefix, outFile: Output filename, nHap: number of haplotypes, subFolder: Name of the subfolder (that contains the simulations), n: Number of .ms files of the chosen class, start: Start number of .ms files, imgDim: Image dimension. For 299 x 299, put 299
 
 * 1.3.3. Example run with sample .ms files:
 
    ```sh
-   python TrIdent.py image_generation_ms Neut neutfile 198 Neutral 10 1 299
+   python TrIdent.py -mode image_generation_ms -pref Neut -outFile neutfile -nHap 198 -subFolder Neutral -n 10 -start 1 -imgDim 299
    ```
    ```sh
-   python TrIdent.py image_generation_ms Sweep sweepfile 198 Sweep 10 1 299
+   python TrIdent.py -mode image_generation_ms -pref Sweep -outFile sweepfile -nHap 198 -subFolder Sweep -n 10 -start 1 -imgDim 299
    ```
 
 * 1.3.4. Output file will be saved in "Image_datasets" folder and output message will print which ms files passed and 'fail'ed the qualification criteria
@@ -171,12 +171,12 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    python TrIdent.py train -h
    ```
 
-* 1.4.2. Arguments: trS: Sweep filename, trN: Neutral filename, splt: Train/test split, modelName: Name of model
+* 1.4.2. Arguments: Sw: Sweep filename, Ne: Neutral filename, split: Train/test split, modelName: Name of model
 
-* 1.4.3. Example run with sample summary statistic file:
+* 1.4.3. Example run with sample image dataset file:
 
    ```sh
-   python TrIdent.py train sweepfile neutfile 0.5 expModel
+   python TrIdent.py -mode train -Sw sweepfile -Ne neutfile -split 0.5 -modelName expModel
    ```
 
 
@@ -187,19 +187,19 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 2. Model testing:
 
-* 2.1. Mode: **preprocess_VCF** dividing CSV files exported from VCF files into window based subfiles:
+* 2.1. Mode: **preprocess_vcf** dividing CSV files exported from VCF files into window based subfiles:
 
 
 * 2.1.1 To view the necessary arguments, run:
    ```sh
    python TrIdent.py preprocess_VCF -h
    ```
-* 2.1.2. Arguments are: V_name: file name (gzipped .vcf), outF: Output folder name
+* 2.1.2. Arguments are: fileName: file name (gzipped .vcf), outFolder: Output folder name
 
 * 2.1.3.  Example run with sample file:
 
    ```sh
-   python TrIdent.py preprocess_VCF chrom22.vcf.gz chr22
+   python TrIdent.py -mode preprocess_vcf -fileName chrom22.vcf.gz -outFolder chr22
    ```
 
 * 2.1.4 Output (.npy) will be saved in "VCF_datasets" folder.
@@ -215,12 +215,12 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    python TrIdent.py image_generation_vcf -h
    ```
 
-* 2.2.2. Arguments are: folder: folder within VCF folder where subfiles are saved, strands: number of haplotypes, prefix: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, img_dim: Image dimension. For 299 x 299, put 299, outP: Output dataset name
+* 2.2.2. Arguments are: subfolder: folder within VCF folder where subfiles are saved, nHap: number of haplotypes, pref: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, imgDim: Image dimension. For 299 x 299, put 299, outDat: Output dataset name
 
 * 2.2.3.  Example run with sample file:
 
    ```sh
-   python TrIdent.py image_generation_vcf chr22 198 chrom22 1 10 299 testVCF
+   python TrIdent.py -mode image_generation_vcf -subfolder chr22 -nHap 198 -pref chrom22 -start 1 -stop 10 -imgDim 299 -outDat testVCF
    ```
 
 * 2.2.4 Output will be saved in "VCF_datasets" folder.
@@ -235,10 +235,10 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 * 2.3.2. Arguments are: fileName: Name of the file to predict on, modelName: Model Name
 
-* 2.3.3. Example run with sample summary statistic file:
+* 2.3.3. Example run with sample empirical image dataset file:
 
    ```sh
-   python TrIdent.py prediction testVCF expModel
+   python TrIdent.py -mode prediction -fileName testVCF -modelName expModel
    ```
 
 <!-- LICENSE -->
