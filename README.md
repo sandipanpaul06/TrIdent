@@ -145,13 +145,9 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 
 * 1.3. Mode: **image_generation_ms** to generate input image dataset:
 
-* 1.3.1. Command to view the necessary arguments, run:
-   ```sh
-   python TrIdent.py image_generation_ms -h
-   ```
-* 1.3.2. Arguments: pref: .ms file prefix, outFile: Output filename, nHap: number of haplotypes, subFolder: Name of the subfolder (that contains the simulations), n: Number of .ms files of the chosen class, start: Start number of .ms files, imgDim: Image dimension. For 299 x 299, put 299
+* 1.3.1. Arguments: pref: .ms file prefix, outFile: Output filename, nHap: number of haplotypes, subFolder: Name of the subfolder (that contains the simulations), n: Number of .ms files of the chosen class, start: Start number of .ms files, imgDim: Image dimension. For 299 x 299, put 299
 
-* 1.3.3. Example run with sample .ms files:
+* 1.3.2. Example run with sample .ms files:
 
    ```sh
    python TrIdent.py -mode image_generation_ms -pref Neut -outFile neutfile -nHap 198 -subFolder Neutral -n 10 -start 1 -imgDim 299
@@ -160,27 +156,23 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    python TrIdent.py -mode image_generation_ms -pref Sweep -outFile sweepfile -nHap 198 -subFolder Sweep -n 10 -start 1 -imgDim 299
    ```
 
-* 1.3.4. Output file will be saved in "Image_datasets" folder and output message will print which ms files passed and 'fail'ed the qualification criteria
+* 1.3.3. Output file will be saved in "Image_datasets" folder and output message will print which ms files passed and 'fail'ed the qualification criteria
 
 
 * 1.4. Mode: **train** to train and test the binary classifier:
 
 
-* 1.4.1. To view the necessary arguments, run:
-   ```sh
-   python TrIdent.py train -h
-   ```
 
-* 1.4.2. Arguments: Sw: Sweep filename, Ne: Neutral filename, split: Train/test split, modelName: Name of model
+* 1.4.1. Arguments: Sw: Sweep filename, Ne: Neutral filename, split: Train/test split, modelName: Name of model
 
-* 1.4.3. Example run with sample image dataset file:
+* 1.4.2. Example run with sample image dataset file:
 
    ```sh
    python TrIdent.py -mode train -Sw sweepfile -Ne neutfile -split 0.5 -modelName expModel
    ```
 
 
-* 1.4.4. Pixel-wise mean and standard deviation files will be saved in Image_datasets. Prediction on N sweeps and N neuts (N = (1-splt)*Number of .ms files of the chosen class), consecutively, will be saved as 'modelName'_test_prediction.npy
+* 1.4.3. Pixel-wise mean and standard deviation files will be saved in Image_datasets. Prediction on N sweeps and N neuts (N = (1-splt)*Number of .ms files of the chosen class), consecutively, will be saved as 'modelName'_test_prediction.npy
 
 
 
@@ -190,19 +182,15 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 * 2.1. Mode: **preprocess_vcf** dividing CSV files exported from VCF files into window based subfiles:
 
 
-* 2.1.1 To view the necessary arguments, run:
-   ```sh
-   python TrIdent.py preprocess_VCF -h
-   ```
-* 2.1.2. Arguments are: fileName: file name (gzipped .vcf), outFolder: Output folder name
+* 2.1.1. Arguments are: fileName: file name (gzipped .vcf), outFolder: Output folder name
 
-* 2.1.3.  Example run with sample file:
+* 2.1.2.  Example run with sample file:
 
    ```sh
    python TrIdent.py -mode preprocess_vcf -fileName chrom22.vcf.gz -outFolder chr22
    ```
 
-* 2.1.4 Output (.npy) will be saved in "VCF_datasets" folder.
+* 2.1.3 Output (.npy) will be saved in "VCF_datasets" folder.
 
 
 
@@ -210,32 +198,24 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 * 2.2. Mode: **image_generation_vcf** geneate image dataset from parsed vcf file:
 
 
-* 2.2.1 To view the necessary arguments, run:
-   ```sh
-   python TrIdent.py image_generation_vcf -h
-   ```
 
-* 2.2.2. Arguments are: subfolder: folder within VCF folder where subfiles are saved, nHap: number of haplotypes, pref: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, imgDim: Image dimension. For 299 x 299, put 299, outDat: Output dataset name
+* 2.2.1. Arguments are: subfolder: folder within VCF folder where subfiles are saved, nHap: number of haplotypes, pref: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, imgDim: Image dimension. For 299 x 299, put 299, outDat: Output dataset name
 
-* 2.2.3.  Example run with sample file:
+* 2.2.2.  Example run with sample file:
 
    ```sh
    python TrIdent.py -mode image_generation_vcf -subfolder chr22 -nHap 198 -pref chrom22 -start 1 -stop 10 -imgDim 299 -outDat testVCF
    ```
 
-* 2.2.4 Output will be saved in "VCF_datasets" folder.
+* 2.2.3 Output will be saved in "VCF_datasets" folder.
 
 
 * 2.3 Mode: **prediction** on empirical image dataset file: 
 
-* 2.3.1. To view the necessary arguments, run:
-   ```sh
-   python TrIdent.py prediction -h
-   ```
 
-* 2.3.2. Arguments are: fileName: Name of the file to predict on, modelName: Model Name
+* 2.3.1. Arguments are: fileName: Name of the file to predict on, modelName: Model Name
 
-* 2.3.3. Example run with sample empirical image dataset file:
+* 2.3.2. Example run with sample empirical image dataset file:
 
    ```sh
    python TrIdent.py -mode prediction -fileName testVCF -modelName expModel
