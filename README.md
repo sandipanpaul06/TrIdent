@@ -232,7 +232,7 @@ The *TrIdent* software has 5 modes:
 * 2.2.3 Output will be saved in *VCF_datasets* (*../TrIdent/VCF_datasets*) folder. From command above, image dataset *testVCF.npy* and corresponding positions in the genome *testVCF_pos.txt* will be saved in *../TrIdent/VCF_datasets*.
 
 
-* Mode: **prediction** on empirical image dataset file: 
+* Mode: **prediction**
 
 
 * 2.3.1. Arguments are
