@@ -146,6 +146,8 @@ The *TrIdent* software has 5 modes:
 *
 *
 
+##2. Model training:
+
 * 1.1. Mode: **image_generation_ms**
 
 * 1.1.1. Arguments:
@@ -187,7 +189,7 @@ The *TrIdent* software has 5 modes:
 * 1.2.3. Pixel-wise mean and standard deviation files will be saved in *Image_datasets*. From the command above the filenames would be *expModel_mean.npy* and *expModel_SD.npy*. Prediction on *N* sweeps and *N* neuts (N = (1-splt)*Number of .ms files of the chosen class), will be saved in the root directory (*../TrIdent*). From the command above, the exported *expModel_test_prediction.npy* would contain prediction outputs of 5 sweep replicates and 5 neutral replicates, consecutively.
 
 
-2. Model testing:
+##2. Model testing:
 
 * 2.1. Mode: **preprocess_vcf** dividing CSV files exported from VCF files into window based subfiles:
 
