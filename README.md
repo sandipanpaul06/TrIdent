@@ -150,7 +150,7 @@ The *TrIdent* software has 5 modes:
 
 ## Model training
 
-* 1.1. Mode: **image_generation_ms**
+* Mode: **image_generation_ms**
 
 * 1.1.1. Arguments:
   * pref: .ms file prefix
@@ -173,7 +173,7 @@ The *TrIdent* software has 5 modes:
 * 1.1.3. Output file will be saved in *Image_datasets* folder (*../TrIdent/Image_datasets*). The output files from the above commands would be: *neutfile.npy* and *sweepfile.npy*.
 
 
-* 1.2. Mode: **train**
+* Mode: **train**
 
 * 1.2.1. Arguments:
   * Sw: Sweep filename
@@ -193,7 +193,7 @@ The *TrIdent* software has 5 modes:
 
 ## Model testing
 
-* 2.1. Mode: **preprocess_vcf** 
+* Mode: **preprocess_vcf** 
 
 
 * 2.1.1. Arguments are:
@@ -211,7 +211,7 @@ The *TrIdent* software has 5 modes:
 
 
 
-* 2.2. Mode: **image_generation_vcf**
+* Mode: **image_generation_vcf**
 
 
 * 2.2.1. Arguments are:
@@ -232,7 +232,7 @@ The *TrIdent* software has 5 modes:
 * 2.2.3 Output will be saved in *VCF_datasets* (*../TrIdent/VCF_datasets*) folder. From command above, image dataset *testVCF.npy* and corresponding positions in the genome *testVCF_pos.txt* will be saved in *../TrIdent/VCF_datasets*.
 
 
-* 2.3 Mode: **prediction** on empirical image dataset file: 
+* Mode: **prediction** on empirical image dataset file: 
 
 
 * 2.3.1. Arguments are
