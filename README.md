@@ -98,27 +98,27 @@ Natural selection leaves detectable patterns of altered spatial diversity within
 
 ### Prerequisites
 
-Python version 3.8.5 or above is necessary to use this software. Run the following commands to ensure you have the required version.
-* check python3 version
+Python version 3.11.9 or above is necessary to use this software. Run the following commands to ensure you have the required version.
+* check python version
   ```sh
   python --version
   ```
 
 ### Installation
 
-Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn, matplotlib
+Required python packages: Pandas, Tensorflow, Numpy, OpenCV, Scikit-Learn, Matplotlib
 
 1. Clone the repo
    ```sh
    git clone https://github.com/sandipanpaul06/TrIdent.git
    ```
+2. Go to project directory
+   ```sh
+   cd TrIdent
+   ```
 3. Package installation
    ```sh
    pip install pandas tensorflow numpy opencv-python-headless scikit-learn matplotlib
-   ```
-4. For the packages already installed, upgrade the packages to the most updated version. For example
-   ```js
-   pip install --upgrade tensorflow
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -128,26 +128,36 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-1. Data preprocessing and model training:
+**Sample data Provided with the software**
 
-* 1.1. Go to TrIdent software directory. Example:
-   ```sh
-   cd TrIdent
-   ```
+* *Discoal* .ms output fles:
 
-* 1.2. .ms output fles:
-
-* 1.2.1. The .ms files are located in "Datasets" folder in the TrIdent software directory. For example: */Users/user/Desktop/TrIdent/Datasets*
+  * *../TrIdent/Datasets* contains two sample subfolders: *Neutral* and *Sweep*. The user can have as many subfolders as they like with thier choice of names.
   
-* 1.2.2. The "Datasets" folder has two example sub-folders: "Neutral" and "Sweep". The toy neutral .ms files are in the "Neutral" folder (*/Users/user/Desktop/TrIdent/Datasets/Neutral*), and the sweep .ms files are in the "Sweep" folder (*/Users/user/Desktop/TrIdent/Datasets/Sweep*).
+  * *Neutral* subfolder (*../TrIdent/Datasets/Neutral*) contains 20 sample neutral replicates with prefix 'Neut' (*Neut_1.ms, Neut_2.ms ... Neut_20.ms*)
+  * *Sweep* subfolder (*../TrIdent/Datasets/Sweep*) contains 20 sample sweep replicates with prefix 'Sweep' (*Sweep_1.ms, Sweep_2.ms ... Sweep_20.ms*)
 
-* 1.2.3. The sweep .ms files have a prefix "Sweep", and the neutral .ms files have a prefix "Neut", followed by consecutive numbers from 1 to 100. Example: (*Sweep_1.ms, Sweep_2.ms ... Sweep_20.ms*) (*Neut_1.ms, Neut_2.ms ... Neut_20.ms*)
+**Modes**
 
-* 1.3. Mode: **image_generation_ms** to generate input image dataset:
+The *TrIdent* software has 5 modes:
+* **image_generation_ms**: generate input image dataset from simulated replicates
+* **train**: train and test the binary classifier
+*
+*
+*
 
-* 1.3.1. Arguments: pref: .ms file prefix, outFile: Output filename, nHap: number of haplotypes, subFolder: Name of the subfolder (that contains the simulations), n: Number of .ms files of the chosen class, start: Start number of .ms files, imgDim: Image dimension. For 299 x 299, put 299
+* 1.1. Mode: **image_generation_ms**
 
-* 1.3.2. Example run with sample .ms files:
+* 1.1.1. Arguments:
+  * pref: .ms file prefix
+  * outFile: Output filename
+  * nHap: number of haplotypes
+  * subFolder: Name of the subfolder (that contains the simulations)
+  * n: Number of .ms files of the chosen class
+  * start: Start number of .ms files
+  * imgDim: Image dimension. For 299 x 299, put 299
+
+* 1.1.2. Example run with sample .ms files:
 
    ```sh
    python TrIdent.py -mode image_generation_ms -pref Neut -outFile neutfile -nHap 198 -subFolder Neutral -n 10 -start 1 -imgDim 299
@@ -156,25 +166,25 @@ Required python packages: pandas, tensorflow, numpy, opencv-python, scikit-learn
    python TrIdent.py -mode image_generation_ms -pref Sweep -outFile sweepfile -nHap 198 -subFolder Sweep -n 10 -start 1 -imgDim 299
    ```
 
-* 1.3.3. Output file will be saved in "Image_datasets" folder and output message will print which ms files passed and 'fail'ed the qualification criteria
+* 1.1.3. Output file will be saved in *Image_datasets* folder (*../TrIdent/Image_datasets*). The output files from the above commands would be: *neutfile.npy* and *sweepfile.npy*.
 
 
-* 1.4. Mode: **train** to train and test the binary classifier:
+* 1.2. Mode: **train**
 
+* 1.2.1. Arguments:
+  * Sw: Sweep filename
+  * Ne: Neutral filename
+  * split: Train/test split
+  * modelName: Name of model
 
-
-* 1.4.1. Arguments: Sw: Sweep filename, Ne: Neutral filename, split: Train/test split, modelName: Name of model
-
-* 1.4.2. Example run with sample image dataset file:
+* 1.2.2. Example run with sample image dataset file:
 
    ```sh
    python TrIdent.py -mode train -Sw sweepfile -Ne neutfile -split 0.5 -modelName expModel
    ```
 
 
-* 1.4.3. Pixel-wise mean and standard deviation files will be saved in Image_datasets. Prediction on N sweeps and N neuts (N = (1-splt)*Number of .ms files of the chosen class), consecutively, will be saved as 'modelName'_test_prediction.npy
-
-
+* 1.2.3. Pixel-wise mean and standard deviation files will be saved in *Image_datasets*. From the command above the filenames would be *expModel_mean.npy* and *expModel_SD.npy*. Prediction on *N* sweeps and *N* neuts (N = (1-splt)*Number of .ms files of the chosen class), will be saved in the root directory (*../TrIdent*). From the command above, the exported *expModel_test_prediction.npy* would contain prediction outputs of 5 sweep replicates and 5 neutral replicates, consecutively.
 
 
 2. Model testing:
