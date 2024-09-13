@@ -136,17 +136,19 @@ Required python packages: Pandas, Tensorflow, Numpy, OpenCV, Scikit-Learn, Matpl
   
   * *Neutral* subfolder (*../TrIdent/Datasets/Neutral*) contains 20 sample neutral replicates with prefix 'Neut' (*Neut_1.ms, Neut_2.ms ... Neut_20.ms*)
   * *Sweep* subfolder (*../TrIdent/Datasets/Sweep*) contains 20 sample sweep replicates with prefix 'Sweep' (*Sweep_1.ms, Sweep_2.ms ... Sweep_20.ms*)
+* Sample .vcf file:
+  * *VCF* folder (*../TrIdent/VCF*) contains gzipped vcf file of chromosome 22 from the CEU genome: *chrom22.vcf.gz*
 
 **Modes**
 
 The *TrIdent* software has 5 modes:
 * **image_generation_ms**: generate input image dataset from simulated replicates
 * **train**: train and test the binary classifier
-*
-*
-*
+* **preprocess_vcf**: extract gzipped .vcf.gz file > convert .vcf file to .csv file > breakdown the .csv file into 500 SNP subfiles
+* **image_generation_vcf**: geneate image dataset from parsed vcf file
+* **prediction**: compute *TrIdent* predictions on the empirical image dataset file
 
-##2. Model training:
+## Model training
 
 * 1.1. Mode: **image_generation_ms**
 
@@ -186,15 +188,17 @@ The *TrIdent* software has 5 modes:
    ```
 
 
-* 1.2.3. Pixel-wise mean and standard deviation files will be saved in *Image_datasets*. From the command above the filenames would be *expModel_mean.npy* and *expModel_SD.npy*. Prediction on *N* sweeps and *N* neuts (N = (1-splt)*Number of .ms files of the chosen class), will be saved in the root directory (*../TrIdent*). From the command above, the exported *expModel_test_prediction.npy* would contain prediction outputs of 5 sweep replicates and 5 neutral replicates, consecutively.
+* 1.2.3. Pixel-wise mean and standard deviation files will be saved in *Image_datasets*. From the command above the filenames would be *expModel_mean.npy* and *expModel_SD.npy*. Prediction on *N* sweeps and *N* neuts (N = (1-splt)*Number of .ms files of the chosen class), will be saved in the root directory (*../TrIdent*). From the command above, the exported *expModel_test_prediction.txt* would contain prediction outputs of 5 sweep replicates and 5 neutral replicates, consecutively and the trained model will be saved as *expModel.pkl*.
 
 
-##2. Model testing:
+## Model testing
 
-* 2.1. Mode: **preprocess_vcf** dividing CSV files exported from VCF files into window based subfiles:
+* 2.1. Mode: **preprocess_vcf** 
 
 
-* 2.1.1. Arguments are: fileName: file name (gzipped .vcf), outFolder: Output folder name
+* 2.1.1. Arguments are:
+  * fileName: file name (gzipped .vcf)
+  * outFolder: Output folder name
 
 * 2.1.2.  Example run with sample file:
 
@@ -202,16 +206,22 @@ The *TrIdent* software has 5 modes:
    python TrIdent.py -mode preprocess_vcf -fileName chrom22.vcf.gz -outFolder chr22
    ```
 
-* 2.1.3 Output (.npy) will be saved in "VCF_datasets" folder.
+* 2.1.3 Output smaller .csv files containing 500 SNP chunks will be saved in user-defined subfolder in the *VCF* folder (*../TrIdent/VCF*). From the command above, smaller .csv files with prefix 'chrom22' (example: *chrom22_1.csv*, chrom22_1.csv*, ..) will be saved in the *chr22* subfolder (*../TrIdent/VCF/chr22*).
 
 
 
 
-* 2.2. Mode: **image_generation_vcf** geneate image dataset from parsed vcf file:
+* 2.2. Mode: **image_generation_vcf**
 
 
-
-* 2.2.1. Arguments are: subfolder: folder within VCF folder where subfiles are saved, nHap: number of haplotypes, pref: file prefix, start: Start number of files with the file prefix, stop: Stop number of files with the file prefix, imgDim: Image dimension. For 299 x 299, put 299, outDat: Output dataset name
+* 2.2.1. Arguments are:
+  * subfolder: folder within VCF folder where subfiles are saved
+  * nHap: number of haplotypes
+  * pref: file prefix
+  * start: Start number of files with the file prefix
+  * stop: Stop number of files with the file prefix
+  * imgDim: Image dimension. For 299 x 299, put 299
+  * outDat: Output dataset name
 
 * 2.2.2.  Example run with sample file:
 
@@ -219,19 +229,22 @@ The *TrIdent* software has 5 modes:
    python TrIdent.py -mode image_generation_vcf -subfolder chr22 -nHap 198 -pref chrom22 -start 1 -stop 10 -imgDim 299 -outDat testVCF
    ```
 
-* 2.2.3 Output will be saved in "VCF_datasets" folder.
+* 2.2.3 Output will be saved in *VCF_datasets* (*../TrIdent/VCF_datasets*) folder. From command above, image dataset *testVCF.npy* and corresponding positions in the genome *testVCF_pos.txt* will be saved in *../TrIdent/VCF_datasets*.
 
 
 * 2.3 Mode: **prediction** on empirical image dataset file: 
 
 
-* 2.3.1. Arguments are: fileName: Name of the file to predict on, modelName: Model Name
+* 2.3.1. Arguments are
+  * fileName: Name of the file to predict on
+  * modelName: Model Name
 
 * 2.3.2. Example run with sample empirical image dataset file:
 
    ```sh
    python TrIdent.py -mode prediction -fileName testVCF -modelName expModel
    ```
+* 2.3.3 Output will be saved in *Predictions* (*../TrIdent/Predictions*) folder. From command above, image dataset *testVCF.npy* and corresponding positions in the genome *prediction_testVCF.txt* will be saved in *../TrIdent/VCF_datasets*.
 
 <!-- LICENSE -->
 ## License
