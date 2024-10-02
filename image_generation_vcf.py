@@ -56,7 +56,7 @@ def image_gen(num_text_file, num_strands, dim, window_length, num_stride):
         for col in range(df.shape[1]):
             lst = np.array(df.iloc[:, col])
             sum_ = np.sum(lst)
-            if sum_ > 127:
+            if sum_ > int(df.shape[0]/2):
                 lst[lst == 1] = 2
                 lst[lst == 0] = 1
                 lst[lst == 2] = 0
