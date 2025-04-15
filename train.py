@@ -59,7 +59,39 @@ model = Model(inp, x)
 X_train = model.predict(X_train_img)
 X_test = model.predict(X_test_img)
 
-logreg = LogisticRegression(penalty='elasticnet', max_iter=20000, solver='saga', C=1.0, l1_ratio=0.5)
+def binary_crossentropy(y_true, y_pred, epsilon=1e-7):
+    """
+    Compute the binary cross-entropy loss.
+   
+    Parameters:
+        y_true (np.ndarray): Ground truth labels (0 or 1), shape (n_samples,)
+        y_pred (np.ndarray): Predicted probabilities, shape (n_samples,)
+        epsilon (float): Small value to avoid log(0)
+   
+    Returns:
+        float: Binary cross-entropy loss
+    """
+    y_pred = np.clip(y_pred, epsilon, 1 - epsilon)  # avoid log(0)
+    loss = - (y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))
+    return np.mean(loss)
+
+losses = []
+l_1s = []
+c_s = []
+
+for l_1 in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
+    for c_ in [10**-4, 10**-3, 10**-2, 10**-1, 10**0, 10**1, 10**2, 10**3, 10**4]
+        logreg = LogisticRegression(penalty='elasticnet', max_iter=20000, solver='saga', C=c_, l1_ratio=l_1)
+        logreg.fit(X_train, Y_train)
+        y_pred = logreg.predict_proba(X_test)
+        loss = binary_crossentropy(Y_test, y_pred[:, 1])
+        losses.append(loss)
+        l_1s.append(l_1)
+        c_s.append(c_)
+best_index = losses.index(min(losses))
+print(f'l1: {l_1s[best_index]}, C: {c_s[best_index]}')
+
+logreg = LogisticRegression(penalty='elasticnet', max_iter=20000, solver='saga', C=c_s[best_index], l1_ratio=l_1s[best_index])
 logreg.fit(X_train, Y_train)
 
 y_pred = logreg.predict_proba(X_test)
