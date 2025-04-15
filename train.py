@@ -65,7 +65,7 @@ logreg.fit(X_train, Y_train)
 y_pred = logreg.predict_proba(X_test)
 print('Accuracy of logistic regression classifier on test set using elastic net penalty with l1 ratio of 0.5: {:.2f}'.format(logreg.score(X_test, Y_test)))
 
-np.savetxt(args.modelName + '_test_prediction.txt', y_pred)
+np.savetxt(args.modelName + '_test_prediction.txt', y_pred[:, 1])
 
 with open(args.modelName + '.pkl', 'wb') as f:
     pickle.dump(logreg, f)
