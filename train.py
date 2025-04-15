@@ -80,7 +80,7 @@ l_1s = []
 c_s = []
 
 for l_1 in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
-    for c_ in [10**-4, 10**-3, 10**-2, 10**-1, 10**0, 10**1, 10**2, 10**3, 10**4]
+    for c_ in [10**-4, 10**-3, 10**-2, 10**-1, 10**0, 10**1, 10**2, 10**3, 10**4]:
         logreg = LogisticRegression(penalty='elasticnet', max_iter=20000, solver='saga', C=c_, l1_ratio=l_1)
         logreg.fit(X_train, Y_train)
         y_pred = logreg.predict_proba(X_test)
