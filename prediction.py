@@ -67,17 +67,13 @@ Loading pre-trained model
 '''
 
 
-pt_model = InceptionResNetV2(include_top=False, weights='imagenet', input_shape= X_emp_img.shape[1:])
-
+pt_model = InceptionResNetV2(include_top=False, input_shape=X_emp_img.shape[1:], weights='imagenet')
 inp = Input(X_emp_img.shape[1:])
 inp2 = tf.keras.applications.inception_resnet_v2.preprocess_input(inp)
 x = pt_model(inp2)
 x = GlobalAveragePooling2D()(x)
-
 x.trainable = False
-
-
-model = Model(inp2, x) #out
+model = Model(inp, x)
 
 
 X_emp = model.predict(X_emp_img)
